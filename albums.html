@@ -152,12 +152,6 @@
                     </div>                        
                 </div>
                 <div class="col-md-4"></div>
-                <div
-                  class="fb-like"
-                  data-share="true"
-                  data-width="450"
-                  data-show-faces="true">
-                </div>
             </div>
         </div>
     </div>
@@ -178,15 +172,28 @@
   <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/dist/pa-embed-player.min.js" async></script>
   <!-- <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script> -->
   <script>
-    // var pageAccessToken = 'EAAOU9tBlZCwoBACrYnnRjEbvwtZAXQfRdOlIIix4cndU3EVPwrWlZBCpP3aZCeMrJVnrcCMXfZAQ4ZAYCTPSb2wZA0OVb0GEHX3pPBbl8cuB9ZA0dWVlQhIlHd1kcaLA7grxZApCBZBwSXreEzK5DHUVjetuiKTVcZBFwkjGXdiLeKrtY75kJP0JSu3z78FrWtsQIsZD';
-    function init(accessToken) {
+
+    var pageAccessToken = 'EAAOU9tBlZCwoBALXyC8ET2Ma6AyMcZCMfylHuE3sd98ZBWafa2EZBB9rZBb4TALZA150ogRKBxP7Wdn8dySkJzpwYv0GLQTSSMnX05mZBJIDpq92LRKKZAEnxntx1pHg2vdSJJ414FyWCrQNsM1HlZA5bZAhMFhFZAsOL7nORKh61gdvwZDZD';
+    var pageAccessToken2 = 'EAAOU9tBlZCwoBADZCy3ens8rE3exEZBqPXbq2qiuZCL5yRuUjjHUg7peyPMlai3IBThPVaZCjYivPGBNUppf28d6jxNDgdXqmC8tKLcmGM7TvRToP8djq67vvE4tosKQVbrpeVZBmq98xNKyfGpl2mRj3raPchqHEIpuUREYQUPQZDZD'
+    let arr = [];
+    function init() {
       FB.api(
-        '/1228110784010566/photos',
+        '/1228110784010566/photos?limit=100',
         'GET',
-        {access_token : accessToken},
+        {access_token : pageAccessToken},
         function(response) {
-            // Insert your code here
-            console.log(response)
+          arr = response.data;
+          console.log(response)
+          for(let i=0; i <= arr.length; i++) {
+            FB.api(
+              `/${arr[i].id}/picture?redirect=false`,
+              'GET',
+              {access_token : pageAccessToken2},
+              function(res) {
+                console.log(res)
+              }
+            );
+          }
         }
       );
     }
@@ -197,13 +204,7 @@
         version    : 'v6.0'
       });
       FB.AppEvents.logPageView();
-      FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          var accessToken = response.authResponse.accessToken;
-          init(accessToken)
-        } 
-      } );
-      // init()
+      init()
     };
   
     (function(d, s, id){
