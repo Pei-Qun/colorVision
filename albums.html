@@ -178,11 +178,12 @@
   <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/dist/pa-embed-player.min.js" async></script>
   <!-- <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script> -->
   <script>
-    function init() {
+    // var pageAccessToken = 'EAAOU9tBlZCwoBACrYnnRjEbvwtZAXQfRdOlIIix4cndU3EVPwrWlZBCpP3aZCeMrJVnrcCMXfZAQ4ZAYCTPSb2wZA0OVb0GEHX3pPBbl8cuB9ZA0dWVlQhIlHd1kcaLA7grxZApCBZBwSXreEzK5DHUVjetuiKTVcZBFwkjGXdiLeKrtY75kJP0JSu3z78FrWtsQIsZD';
+    function init(accessToken) {
       FB.api(
         '/1228110784010566/photos',
         'GET',
-        {},
+        {access_token : accessToken},
         function(response) {
             // Insert your code here
             console.log(response)
@@ -196,7 +197,13 @@
         version    : 'v6.0'
       });
       FB.AppEvents.logPageView();
-      init()
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          var accessToken = response.authResponse.accessToken;
+          init(accessToken)
+        } 
+      } );
+      // init()
     };
   
     (function(d, s, id){
