@@ -26,7 +26,7 @@
 
   <!-- Style CSS -->
   <link rel="stylesheet" href="style.min.css">
-
+  
 </head>
 
 <body>
@@ -152,6 +152,12 @@
                     </div>                        
                 </div>
                 <div class="col-md-4"></div>
+                <div
+                  class="fb-like"
+                  data-share="true"
+                  data-width="450"
+                  data-show-faces="true">
+                </div>
             </div>
         </div>
     </div>
@@ -170,7 +176,37 @@
   <script src="js/plugins.js"></script>
   <script src="js/active.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/dist/pa-embed-player.min.js" async></script>
-
+  <!-- <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script> -->
+  <script>
+    function init() {
+      FB.api(
+        '/1228110784010566/photos',
+        'GET',
+        {},
+        function(response) {
+            // Insert your code here
+            console.log(response)
+        }
+      );
+    }
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '627764058019163',
+        xfbml      : true,
+        version    : 'v6.0'
+      });
+      FB.AppEvents.logPageView();
+      init()
+    };
+  
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
 </body>
 
 </html>
